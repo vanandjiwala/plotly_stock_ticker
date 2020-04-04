@@ -1,2 +1,2 @@
-# plotly_stock_ticker
+# Plotly Stock Ticker Dashboard
 Stock ticker dashboard using plotly dash
