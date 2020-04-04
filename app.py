@@ -43,8 +43,24 @@ app.layout = html.Div([
                         value='TSLA',
                         className="input"
                     )
-                ],className="control")
-            ],className="field")
+                ],className="control"),
+            ],className="field"),
+            html.Div([
+                html.Label(children="Select Date",className="label has-text-white"),
+                dcc.DatePickerRange(
+                    id='my_date_picker',
+                    min_date_allowed=datetime(2020, 1, 1),
+                    max_date_allowed=datetime.today(),
+                    start_date=datetime(2020, 1, 1),
+                    end_date=datetime.today()
+                )
+            ],className="field"),
+            html.Div([
+                html.Button('Submit', id='submit-val', n_clicks=0, className="button is-medium is-light is-fullwidth")
+            ], className="field"),
+            html.Div([
+                html.Button('Watch-List', id='submit-watchlist', n_clicks=0, className="button is-medium is-light is-fullwidth")
+            ], className="field")
         ],className="column is-3"),
         html.Div([
             dcc.Graph(
@@ -72,19 +88,31 @@ app.layout = html.Div([
 @app.callback(Output('my_graph','figure'),
               [Input('my_ticker_symbol','value')])
 def update_chart(stock_ticker):
-    start = datetime(2016, 9, 1)
-    end = datetime(2018, 9, 1)
-    print(os.getenv('IEX_TOKEN'))
-    df = get_historical_data(stock_ticker, start, end, output_format='pandas', token=config.api_key)
-    print(df)
+    start = datetime(2019,1,1)
+    end = datetime(2019,12,31)
+
+    #Commented to avoid unwanted API calls while development since there is a limit to number of calls
+    #df = get_historical_data(stock_ticker, start, end, output_format='pandas', token=config.api_key, close_only=True)
+    #print(df)
+    # figure = {
+    #     'data': [
+    #         {'x': df.index, 'y': df.close}
+    #     ],
+    #     'layout': {
+    #         'title': stock_ticker,
+    #         'plot_bgcolor': '#CDE0CA',
+    #         'paper_bgcolor': '#BFD8FF',
+    #     }
+    # }
+
     figure = {
         'data': [
-            {'x': df.index, 'y': df.close}
+            {'x': [1, 2], 'y': [3, 1]}
         ],
         'layout': {
-            'title': stock_ticker,
+            'title': 'ticker',
             'plot_bgcolor': '#CDE0CA',
-            'paper_bgcolor': '#BFD8FF',
+            'paper_bgcolor': '#CDE0CA',
         }
     }
 
